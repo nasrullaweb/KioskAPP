@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+      <link rel = "stylesheet" href = "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+      <script src = "https://code.jquery.com/jquery-1.11.3.min.js"></script>
+      <script src = "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+      <script src = "https://rawgit.com/briangonzalez/rgbaster.js/master/rgbaster.min.js"></script>
+      <script src = "https://rawgit.com/jariz/vibrant.js/master/dist/Vibrant.min.js"></script>
+      <script src = "http://chir.ag/projects/ntc/ntc.js"></script>
+      <style>
+        @font-face {
+            font-family: "ibm-plex-sans"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-regular.woff2") format("woff2");
+            font-family: "ibm-plex-sans"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-regular.woff") format("woff");
+        }
+        @font-face {
+            font-family: "ibm-plex-sans-bold"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-bold.woff2") format("woff2");
+            font-family: "ibm-plex-sans-bold"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-bold.woff") format("woff");
+        }
+        @font-face {
+            font-family: "ibm-plex-sans-extralight"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-extralight.woff2") format("woff2");
+            font-family: "ibm-plex-sans-extralight"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-extralight.woff") format("woff");
+        }
+        @font-face {
+            font-family: "ibm-plex-sans-light"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-light.woff2") format("woff2");
+            font-family: "ibm-plex-sans-light"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-light.woff") format("woff");
+        }
+        @font-face {
+            font-family: "ibm-plex-sans-medium"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-medium.woff2") format("woff2");
+            font-family: "ibm-plex-sans-medium"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-medium.woff") format("woff");
+        }
+        @font-face {
+            font-family: "ibm-plex-sans-semibold"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-semibold.woff2") format("woff2");
+            font-family: "ibm-plex-sans-semibold"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-semibold.woff") format("woff");
+        }
+        @font-face {
+            font-family: "ibm-plex-sans-thin"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-thin.woff2") format("woff2");
+            font-family: "ibm-plex-sans-semibold"; 
+            src: url("https://1.www.s81c.com/common/fonts/plex/v1/ibmplexsans-thin.woff") format("woff");
+        }
+        body {
+            background-color: #fff;
+        }
+        headerStartText {
+            font-size: 20px;
+            /* font-family: ibmplex; */
+            pointer-events: none;
+            color: dodgerblue;
+            font-weight: 10;
+            margin-left: 10px;
+        }
+        headerMidText {
+            font-size: 20px;
+            /* font-family: ibmplex; */
+            pointer-events: none;
+            color: dodgerblue;
+            font-weight: 100;
+            margin-left: 30%;
+        }
+        footerMidText {
+            font-size: 15px;
+            pointer-events: none;
+            color: white;
+            font-weight: 100;
+            margin-left: 40%;
+            vertical-align: middle;
+            padding-top: 10px;
+        }
+        contenttext {
+            font-size: 15px;
+            pointer-events: none;
+            color: white;
+            font-weight: 100;
+            vertical-align: middle;
+            padding-top: 10px;
+            margin-left: 2%;
+        }        
+        .webcam-box-outer {
+          background: black;
+          border: 1px solid #585858;
+          border-radius: 4px;
+          box-sizing: border-box;
+          display: inline-block;
+          padding: 3px;
+        }
+        .webcam-box-inner {
+          border: 1px solid #585858;
+          border-radius: 4px;
+          box-sizing: border-box;
+          /*display: flex;*/
+          justify-content: center;
+          overflow: hidden;
+          width: 400px;
+        }
+
+        .ui-page-theme-a .header-container {
+            position: fixed;
+            height: 150px;
+            font-size: 60px;
+            line-height: 150px;
+            background-color: #fff;
+            width: 100%;
+            border: 0;
+        }
+        headerStartText {
+            display: none;
+        }
+        headerMidText.headerMidText {
+            font-size: 60px;
+            color: #000;
+            font-family: "ibm-plex-sans-extralight";
+            margin-right: 0;
+            margin-left: 30px;
+        }
+        .logo {
+            height: 60px;
+            margin-right: 30px;
+            margin-top: 48px;
+        }
+        .main-container {
+            position: fixed;
+            height: calc(100% - 300px);
+            width: calc(100% - 60px);
+            background-color: #fff;
+            top: 150px;
+            margin: 30px;
+            padding: 0;
+            background: #000;
+            margin-top: 0;
+        }
+        .ui-page-theme-a .footer-container {
+            position: fixed;
+            height: 120px;
+            width: 100%;
+            background-color: #3a5ba8;
+            bottom: 0; 
+            text-align: center;
+        }
+        .footer-container footermidtext {
+            font-size: 23px;
+            line-height: 120px;
+            font-family: "ibm-plex-sans-medium";
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin: 0;
+            padding: 0;
+        }
+        .imgLink {
+            height: 45px;
+            position: relative;
+            top: -4px;
+            left: -2px;
+        }
+        .no-container {
+            display: none;
+        }
+        .left-container {
+            width: 65%;
+            height: 100%;
+            border: 0;
+            padding: 0;
+            float: left;
+            position: relative;
+        }
+        .right-container {
+            width: 35%;
+            height: 100%;
+            border: 0;
+            padding: 30px;
+            float: left;
+            background-image: url('bg_ibm.png');
+            background-position: bottom;
+            background-repeat: no-repeat;
+        }
+        .right-container .webcam-box-inner, .left-container .webcam-box-inner {
+            width: 100%;
+            border: 0;
+            height: 100%;
+        }
+        contenttext.intro-txt, contenttext.intro-txt1 {
+            font-size: 50px;
+            font-family: "ibm-plex-sans-extralight";
+            font-weight: 100;
+            line-height: 60px;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+        contenttext.intro-txt1 span {
+            font-family: "ibm-plex-sans-semibold";
+            font-weight: 600;
+        }
+        contenttext.intro-txt span {
+            font-family: "ibm-plex-sans-medium";
+            font-weight: 500;
+        }
+        contenttext.intro-txt1 {
+            padding-top: 15px;
+        }
+        contenttext.intro-txt1 span {
+            display: block;
+        }
+        .left-container .slide1Img, .image-cont img {
+            max-width: 100%;
+            max-height: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        .rotateImg {
+            -webkit-transform: rotate(180deg);     /* Chrome and other webkit browsers */
+            -moz-transform: rotate(180deg);        /* FF */
+            -o-transform: rotate(180deg);          /* Opera */
+            -ms-transform: rotate(180deg);         /* IE9 */
+            transform: rotate(180deg); 
+            left: 0;
+        }
+        #page2 .right-container {
+            width: 50%;
+            padding: 25px;
+            background-color: #a59f9f;
+            background-image: none;
+            position: relative;
+        }
+        #page2 .left-container {
+            width: 50%;
+            padding: 25px;
+            position: relative;;
+        }
+        .image-cont {
+            width: 100%;
+            height: calc(100% - 185px);
+            background: #000;
+            position: relative;
+        }
+        #page2 .right-container .image-cont {
+            background-color: #a59f9f;
+        }
+        .year-info {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            color: #999;
+            z-index: 10;
+            font-size: 60px;
+            font-family: "ibm-plex-sans-thin";
+            font-weight: 100;
+        }
+        .percentage-container {
+            height: 105px;
+            padding-top: 25px;
+        }
+        .per-color {
+            height: 100%;
+            float: left;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .per-color .color {
+            font-size: 20px;
+            padding: 10px 0 0 20px;
+            font-family: "ibm-plex-sans-light";
+            font-weight: 300;
+            display: block;
+        }
+        .per-color .per {
+            font-size: 54px;
+            padding: 0 0 0 20px;
+            font-family: "ibm-plex-sans-light";
+            font-weight: 300;
+            line-height: 54px;
+        }
+        .per-color .symbol {
+            font-size: 32px;
+            font-family: "ibm-plex-sans-medium";
+            font-weight: 500;
+            position: relative;
+            top: -12px;
+        }
+        .per-color-1 {
+            background-color: red;
+            width: 52%;
+        }
+        .per-color-2 {
+            background-color: black;
+            width: 28%;
+        }
+        .per-color-3 {
+            background-color: gray;
+            width: 20%;
+        }
+        .ui-page-theme-a {
+            text-shadow: none;
+        }
+        .lastpiccolor {
+            font-size: 31px;
+            font-family: "ibm-plex-sans-light";
+            font-weight: 300;
+            display: block;
+            line-height: 78px;
+            height: 80px;
+            text-align: center;
+        }
+        .color-1, .color-2 {
+            font-family: "ibm-plex-sans-medium";
+            font-weight: 500;
+        }
+        #page2 .left-container .lastpiccolor {
+            color: #fff;
+        }
+        #page2 .left-container .year-info {
+            color: #fff;
+        }
+        #page3 .left-container {
+            width: 55%;
+            padding: 25px;
+            position: relative;
+            padding-right: 0;
+        }
+        #page3 .right-container {
+            width: 45%;
+            padding: 25px;
+            position: relative;
+            background-image: none;
+            box-sizing: border-box;
+        }
+        .top-container {
+            height: calc(100% - 70px);
+            width: 100%;
+        }
+        .bottom-container {
+            height: 70px;
+            width: 100%;
+            text-align: center;
+            line-height: 95px;
+            font-size: 27px;
+            font-family: "ibm-plex-sans-medium";
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+        .left-cont {
+            width: calc(50% - 12.5px);
+            float: left;
+            height: 100%;
+        }
+        .right-cont {
+            width: calc(50% - 12.5px);
+            float: left;
+            height: 100%;
+        }
+        .mid-cont {
+            width: 25px;
+            float: left;
+            height: 100%;
+        }
+        .top-cont {
+            height: calc(50% - 12.5px);
+            width: 100%;
+            border: 0;
+        }
+        .bottom-cont {
+            height: calc(50% - 12.5px);
+            width: 100%;
+            border: 0;
+        }
+        .mid-vel-cont {
+            height: 25px;
+            width: 100%;
+        }
+        .img-cont-small, .img-cont2 {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .img-cont-small img, .img-cont2 img {
+            max-width: 100%;
+            max-height: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        .img-cont-small.active img{
+            outline: 2px solid #3a5ba8;
+        }
+        .img-cont-small.active {
+            outline: 5px solid #3a5ba8;
+        }
+        #page4 .right-container {
+            background-image: none;
+        }
+        contenttext.intro-txt2, contenttext.intro-txt3, contenttext.intro-txt4 {
+            font-size: 55px;
+            font-family: "ibm-plex-sans-bold";
+            font-weight: 700;
+            line-height: 70px;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+        contenttext.intro-txt3 {
+            font-size: 51px;
+            font-family: "ibm-plex-sans-extralight";
+            font-weight: 100;
+            line-height: 60px;
+        }
+        contenttext.intro-txt4 {
+            font-size: 51px;
+        }
+        .cont-vel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cont-vel-item {
+            margin: auto;
+            text-align: center;
+        }
+        .print-button {
+            width: 50%;
+            padding: 30px;
+            background-color: #3a5ba8;
+            font-family: "ibm-plex-sans-medium";
+            font-weight: 500;
+            font-size: 24px;
+            color: #fff;
+            margin: 0 auto;
+            margin-top: 60px;
+            letter-spacing: 2px;
+        }
+        #page2-1 .right-container {
+            background-image: none;
+            position: relative;
+        }
+        #page2-1 .left-container {
+            padding: 25px 0 25px 25px;
+        }
+        #page2-1 .left-container .webcam-box-inner {
+            position: relative;
+        }
+        #page2-1 .percentage-container {
+            padding-top: 0;
+        }
+        #page2-1 .per-color {
+            float: none;
+            height: 165px;
+        }
+        #page2-1 .per-color .color {
+            font-size: 26px;
+            padding: 25px 0 0 20px;
+            font-family: "ibm-plex-sans-extralight";
+            font-weight: 100;
+        }
+        #page2-1 .per-color .per {
+            font-size: 71px;
+            padding: 0 0 0 20px;
+            font-family: "ibm-plex-sans-light";
+            font-weight: 300;
+            line-height: 90px;
+        }
+        #page2-1 .per-color .symbol {
+            font-size: 35px;
+            font-family: "ibm-plex-sans-light";
+            font-weight: 300;
+            position: relative;
+            top: -20px;
+        }
+        #page2-1 .lastpiccolor {
+            position: absolute;
+            bottom: 0;
+            color: #fff;
+            width: calc(100% - 50px);
+            left: 0;
+            text-align: left;
+            height: 105px;
+            font-size: 39px;
+            line-height: 50px;
+            padding: 25px;
+        }
+        #page0 .main-container {
+            margin: 30px;
+            top: 0;
+            height: calc(100% - 180px);
+            background-image: url('bg_start.png');
+            background-position: bottom right;
+            background-repeat: no-repeat;
+        }
+        #page0 .logo {
+            position: absolute;
+            right: 60px;
+            top: 60px;
+            margin: 0;
+        }
+        .start-screen {
+            padding: 200px 105px;
+            color: #fff;
+            line-height: 125px;
+            letter-spacing: 2px;
+        }
+        .start-txt {
+            font-family: "ibm-plex-sans-extralight";
+            font-weight: 100;
+            font-size: 110px;
+        }
+        .start-txt1 {
+            font-family: "ibm-plex-sans-medium";
+            font-weight: 500;
+            font-size: 110px;
+        }
+      </style>
+      
+   </head>
+    <script>
+      //Provide node-red base url as mentioned in documentation
+      var NODERED_BASE_URL = 'localhost:1880';
+      var NODERED_websocket_path = '/ws/camstream';
+      var websocketURL = "ws://" + NODERED_BASE_URL + NODERED_websocket_path;
+      var imageMap = [];
+      //for starting events
+      let isPlaying = false,gotMetadata = false; 
+      //Used for motion detection
+      let lastFrameData = null,lastFrameTime = null;
+      
+      //create a canvas to grab an image for upload
+      let imageCanvas = document.createElement('canvas'),
+        imageCtx = imageCanvas.getContext("2d");
+    
+      //create a canvas for drawing object boundaries
+      let drawCanvas = document.createElement('canvas'),
+        drawCtx = drawCanvas.getContext("2d");
+      
+      
+    //Parameters
+    const uploadWidth = 640; //the width of the upload file
+    const mirror = false; //mirror the boundary boxes
+    const updateInterval = 200; //the max rate to upload images
+    const scoreThreshold = 0.5;
+    const imageChangeThreshold = 0.05; //how much the image can change before we trigger motion
+    var base64ImageContent;  
+    var TIMEOUT_CONST = 2000;
+    var newColor1 = 'gray';
+    var newColor2 = 'black';
+    var newColor3 = 'white';
+    var newColorToDisplay1 = 'Gray';
+    var newColorToDisplay2 = 'Black';
+    var newColorToDisplay3 = 'White';
+    var newColorPercentage1 = 44;
+    var newColorPercentage2 = 29;
+    var newColorPercentage3 = 27;
+    var newFontColor1 = 'white';
+    var newFontColor2 = 'white';
+    var newFontColor3 = 'black';
+    var oldColor1 = 'red';
+    var oldColor2 = 'black';
+    var oldColor3 = 'gray';
+    var oldColorToDisplay1 = 'Red';
+    var oldColorToDisplay2 = 'Black';
+    var oldColorToDisplay3 = 'gray';
+    var oldColorPercentage1 = 50;
+    var oldColorPercentage2 = 28;
+    var oldColorPercentage3 = 22;
+    var oldFontColor1 = 'white';
+    var oldFontColor2 = 'white';
+    var oldFontColor3 = 'white';
+    
+    function updateStyle() { 
+         var styleimg = document.getElementById('styleshot');
+         styleimg.src = '/style/styletransfer.png?t='+ new Date().getTime();;
+    }
+
+    function updatePercentageStyles() {
+        $('.new-cont-per .per-color-1').css({'background-color': newColor1, 'width': newColorPercentage1 + '%', 'color': newFontColor1});
+        $('.new-cont-per .per-color-2').css({'background-color': newColor2, 'width': newColorPercentage2 + '%', 'color': newFontColor2});
+        $('.new-cont-per .per-color-3').css({'background-color': newColor3, 'width': newColorPercentage3 + '%', 'color': newFontColor3});
+        $('.new-color-list .color-1').text(newColorToDisplay1);
+        $('.new-color-list .color-2').text(newColorToDisplay2);
+        $('.new-cont-per .per-color-1 .color').text(newColorToDisplay1);
+        $('.new-cont-per .per-color-2 .color').text(newColorToDisplay2);
+        $('.new-cont-per .per-color-3 .color').text(newColorToDisplay3);
+        $('.new-cont-per .per-color-1 .per').text(newColorPercentage1);
+        $('.new-cont-per .per-color-2 .per').text(newColorPercentage2);
+        $('.new-cont-per .per-color-3 .per').text(newColorPercentage3);
+        
+
+        $('.old-cont-per .per-color-1').css({'background-color': oldColor1, 'width': oldColorPercentage1 + '%', 'color': oldFontColor1});
+        $('.old-cont-per .per-color-2').css({'background-color': oldColor2, 'width': oldColorPercentage2 + '%', 'color': oldFontColor2});
+        $('.old-cont-per .per-color-3').css({'background-color': oldColor3, 'width': oldColorPercentage3 + '%', 'color': oldFontColor3});
+        $('.old-color-list .color-1').text(oldColorToDisplay1);
+        $('.old-color-list .color-2').text(oldColorToDisplay2);
+        $('.old-cont-per .per-color-1 .color').text(oldColorToDisplay1);
+        $('.old-cont-per .per-color-2 .color').text(oldColorToDisplay2);
+        $('.old-cont-per .per-color-3 .color').text(oldColorToDisplay3);
+        $('.old-cont-per .per-color-1 .per').text(oldColorPercentage1);
+        $('.old-cont-per .per-color-2 .per').text(oldColorPercentage2);
+        $('.old-cont-per .per-color-3 .per').text(oldColorPercentage3);
+    }
+      
+      $(document).ready(function() {  
+
+        
+
+        if (NODERED_BASE_URL === '') {
+          alert("Node-red Base URL is not provided.")
+        }
+    
+        var storedArtifact, storedData;
+    
+
+        message = {"cmd":"graph"};
+        //send(JSON.stringify(message));
+    
+        for (var i = 0; i < 1024; ++i) {
+          imageMap[String.fromCharCode(i)] = i;
+        }
+    
+        StreamVideo();
+        document.body.appendChild(drawCanvas);
+        
+        document.getElementById('wavestyle').addEventListener('click', () => {
+            $.post("http://localhost:1880/voguestyle",
+            {
+                data: base64ImageContent,
+                style:'wave'
+            },
+            function(data, status){
+                if(status=='success'){
+                 	setTimeout("updateStyle()", TIMEOUT_CONST); 
+                }
+                console.log("Status: " + status);
+            });       
+        });
+        document.getElementById('candystyle').addEventListener('click', () => {
+            $.post("http://localhost:1880/voguestyle",
+            {
+                data: base64ImageContent,
+                style:'candy'
+            },
+            function(data, status){
+                if(status=='success'){
+               		setTimeout("updateStyle()", TIMEOUT_CONST);
+                }
+                console.log("Status: " + status);
+            });       
+        });
+        document.getElementById('screamstyle').addEventListener('click', () => {
+            $.post("http://localhost:1880/voguestyle",
+            {
+                data: base64ImageContent,
+                style:'scream'
+            },
+            function(data, status){
+                if(status=='success'){
+                	setTimeout("updateStyle()", TIMEOUT_CONST);
+                    
+                }
+                console.log("Status: " + status);
+            });       
+        });
+        document.getElementById('mosiacstyle').addEventListener('click', () => {
+            $.post("http://localhost:1880/voguestyle",
+            {
+                data: base64ImageContent,
+                style:'mosiac'
+            },
+            function(data, status){
+                if(status=='success'){
+                   setTimeout("updateStyle()", TIMEOUT_CONST);
+                }
+                console.log("Status: " + status);
+            });       
+        });
+    
+        document.getElementById('takesnap').addEventListener('click', () => {
+            var canvas = document.createElement("canvas");
+            var scale = 0.25;
+            var video = $("#videoStream").get(0);
+            canvas.width = video.videoWidth * scale;
+            canvas.height = video.videoHeight * scale;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            var img = document.getElementById('snapshot');
+            img.src = canvas.toDataURL('image/jpeg');
+            var styleimg = document.getElementById('styleshot');
+            styleimg.src = canvas.toDataURL('image/jpeg');
+
+
+            RGBaster.colors(img, {
+                paletteSize: 3,
+                success: function (payload) {
+                    var colortext ='';
+                    var n_match  = ntc.name(rgb2hex(payload.dominant));
+                    console.log('Dominant Color:', n_match[1]);
+                    colortext=colortext+n_match[1]+' and ';
+                    var n_match  = ntc.name(rgb2hex(payload.secondary));
+                    console.log('Secondary color:', n_match[1]);
+                    colortext=colortext+n_match[1];
+                    document.getElementById('piccolor').innerHTML='This year your dominant colours are '+colortext;
+                    console.log('Palette:', payload.palette);
+                }
+            });
+            
+            var oldimg = document.getElementById('oldsnap');
+            oldimg.src = '/celebrity/'+ 'Karan_Johar'+'/1.jpg';
+
+            base64ImageContent = canvas.toDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
+            //socket.send(base64ImageContent);
+            //console.log(base64ImageContent);
+            $.post("http://localhost:1880/voguepic",
+            {
+                data: base64ImageContent
+            },
+            function(data, status){
+                /*if(status=='success'){
+                    var styleimg = document.getElementById('styleshot');
+                    styleimg.src = '/Users/sasikanth/Documents/Vogue_demo/vogue/style/styletransfer.png';
+                }*/
+                if(data.responses){
+                    if (data.responses[0].labelAnnotations){
+                        if(data.responses[0].textAnnotations){
+                           ocrText = data.responses[0].textAnnotations[0].description;
+                           document.getElementById('camstatus').textContent=ocrText;
+                           console.log("OCR text:"+data.responses[0].textAnnotations[0].description); 
+                            // Now draw boxes around all the faces
+                            context.strokeStyle = 'rgba(0,255,0,0.8)';
+                            context.lineWidth = '5';
+                            for (i = 0; i < data.responses[0].textAnnotations.length; i++) {
+                                context.beginPath();
+                                var origX = 0;
+                                var origY = 0;
+                                for (j = 0; j < data.responses[0].textAnnotations[i].boundingPoly.vertices.length; j++) {
+                                    if (j === 0) {
+                                        origX = data.responses[0].textAnnotations[i].boundingPoly.vertices[j].x;
+                                        origY = data.responses[0].textAnnotations[i].boundingPoly.vertices[j].y;
+                                    }
+    
+                                    context.lineTo(data.responses[0].textAnnotations[i].boundingPoly.vertices[j].x, data.responses[0].textAnnotations[i].boundingPoly.vertices[j].y);
+                                }
+                                context.lineTo(origX, origY);
+                                context.stroke();
+                            }
+                        }
+                    }
+                }
+                console.log("Data: " + data + "\nStatus: " + status);
+            });      
+            
+        });    
+    
+        //Once socket will work, following function call is not required from here
+        //showArtifact();
+    
+        // $("#arrowButton").attr("disabled", false);
+      });
+    
+      //Socket communication
+      var socket = new  WebSocket(websocketURL);
+          
+      socket.onopen = function() {
+        var message = {
+          'cmd': 'Client connected'
+        };
+        //socket.send(JSON.stringify(message));
+      };
+          
+      socket.onclose = function(){
+        alert("Socket Closed!");
+        console.log('Connection closed');
+      };
+    
+      socket.onerror = function(error) {
+        alert("Socket Error!");
+        console.log('Error detected: ' + error);
+      };
+          
+      socket.onmessage = function(e) {
+        var server_message = e.data;
+        var responseObject = JSON.parse(server_message);
+        console.log(server_message);
+        if(responseObject.base64){
+           drawStream('camstream', responseObject.base64); 
+        }
+        
+        if(responseObject.text){
+            if(responseObject.text == 'TRUE'){
+                console.log('OBJECT HAS TEXT')
+            }
+        }
+        
+        if(responseObject.faces){
+            if(responseObject.faces == 'TRUE'){
+                console.log('OBJECT HAS FACES')
+                console.log(responseObject.names)
+                document.getElementById('person').textContent = "Hi, " + responseObject.names +" ! I am Watson";
+            }else{
+             document.getElementById('person').textContent = "Hi, " + responseObject.name +" ! I am Watson";
+             }
+        }
+        
+        document.getElementById('person').textContent = "Hi, " + responseObject.names +" ! I am Watson";
+        
+        //display_image('camstream', 300, 300, e.data);
+        
+           
+      };
+        
+      function send(msg) {
+        wait_for_socket_connection(socket, function() {
+          socket.send(msg);
+        });
+      };
+        
+      function display_image(idCanvas, imgWidth, imgHeight, imgBase64) {
+        var imgBin = atob(imgBase64);
+        var x = 0;
+        var w = imgWidth * imgHeight * 4;
+        var canvas = document.getElementById(idCanvas);
+        var context = canvas.getContext('2d');
+        var imageData = context.getImageData(0, 0, imgWidth, imgHeight);
+        
+        for (var p = 0; p < w; ) {
+          imageData.data[p++] = imageMap[imgBin[x++]];
+          imageData.data[p++] = imageMap[imgBin[x++]];
+          imageData.data[p++] = imageMap[imgBin[x++]];
+          imageData.data[p++] = 255;
+        }
+        context.putImageData(imageData, 0, 0);
+      };
+        
+      function drawStream(idCanvas, imgBase64){
+        var canvas = document.getElementById(idCanvas);
+        var ctx = canvas.getContext("2d");
+        canvas.width = 320;
+        canvas.height = 320;
+        
+        var image = new Image();
+        image.onload = function() {
+          ctx.drawImage(image, 0, 0,320,320);
+        };
+        image.src = "data:image/jpeg;base64,"+imgBase64;     
+      };  
+        
+      function StreamVideo(){
+        var video = document.querySelector("#videoStream");
+         
+        if (navigator.mediaDevices.getUserMedia) {       
+            navigator.mediaDevices.getUserMedia({video: true})
+          .then(function(stream) {
+            video.srcObject = stream;
+          })
+          .catch(function(err0r) {
+            console.log("Something went wrong!");
+          });
+        }      
+          
+        //check if metadata is ready - we need the video size
+        video.onloadedmetadata = () => {
+            console.log("video metadata ready");
+            gotMetadata = true;
+            if (isPlaying)
+                console.log('PLAYING');
+                //startVideoAnalysis();
+        };
+        
+        //see if the video has started playing
+        video.onplaying = () => {
+            console.log("video playing");
+            isPlaying = true;
+            if (gotMetadata) {
+                console.log("METADATA");
+                //startVideoAnalysis();
+            }
+        };      
+          
+          
+      };    
+       
+      //Function to measure the change in an image
+      //ToDo: improve this - convert to greyscale
+      function imageChange(sourceCtx, changeThreshold) {
+        
+            let changedPixels = 0;
+            const threshold = changeThreshold * sourceCtx.canvas.width * sourceCtx.canvas.height;   //the number of pixes that change change
+        
+            let currentFrame = sourceCtx.getImageData(0, 0, sourceCtx.canvas.width, sourceCtx.canvas.height).data;
+        
+            //handle the first frame
+            if (lastFrameData === null) {
+                lastFrameData = currentFrame;
+                return true;
+            }
+        
+            //look for the number of pixels that changed
+            for (let i = 0; i < currentFrame.length; i += 4) {
+                let lastPixelValue = lastFrameData[i] + lastFrameData[i + 1] + lastFrameData[i + 2];
+                let currentPixelValue = currentFrame[i] + currentFrame[i + 1] + currentFrame[i + 2];
+        
+                //see if the change in the current and last pixel is greater than 10; 0 was too sensitive
+                if (Math.abs(lastPixelValue - currentPixelValue) > (10)) {
+                    changedPixels++
+                }
+            }
+        
+            //console.log("current frame hits: " + hits);
+            lastFrameData = currentFrame;
+        
+            return (changedPixels > threshold);
+        
+      };
+        
+      //Check if the image has changed & enough time has passeed sending it to the API
+      function sendImageFromCanvas() {
+            var v = document.querySelector("#videoStream");
+        
+            imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight, 0, 0, uploadWidth, uploadWidth * (v.videoHeight / v.videoWidth));
+        
+            let imageChanged = imageChange(imageCtx, imageChangeThreshold);
+            let enoughTime = (new Date() - lastFrameTime) > updateInterval;
+        
+            if (imageChanged && enoughTime) {
+                lastFrameTime = new Date();
+                console.log('IMAGE CHANGED');
+                var msg= {};
+                msg.base64 = true;
+                msg = imageCanvas.toDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
+                socket.send(JSON.stringify(msg));
+                //imageCanvas.toBlob(socket.send(msg), 'image/jpeg');
+            }
+            //else {
+                setTimeout(sendImageFromCanvas, updateInterval);
+            //}
+      };
+        
+      //Start video analysis
+      function startVideoAnalysis() {
+        
+            console.log("Starting Video Analysis");
+            var v = document.querySelector("#videoStream");    
+            //Set canvas sizes based on input video
+            drawCanvas.width = v.videoWidth;
+            drawCanvas.height = v.videoHeight;
+        
+            imageCanvas.width = uploadWidth;
+            imageCanvas.height = uploadWidth * (v.videoHeight / v.videoWidth);
+        
+            //Some styles for the drawcanvas
+            drawCtx.lineWidth = 4;
+            drawCtx.strokeStyle = "cyan";
+            drawCtx.font = "20px Verdana";
+            drawCtx.fillStyle = "cyan";
+        
+            //Now see if we should send an image
+            sendImageFromCanvas(v);
+      };  
+       
+        
+      function wait_for_socket_connection(socket, callback){
+        setTimeout(
+          function(){
+            if (socket.readyState === 1) {
+              if(callback !== undefined){
+                callback();
+              }
+              return;
+            } else {
+              wait_for_socket_connection(socket,callback);          
+            }
+          }, 5);
+      };
+
+
+    //Function to convert hex format to a rgb color
+    function rgb2hex(rgb){
+     rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+     return (rgb && rgb.length === 4) ? "#" +
+      ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+    }
+    
+    </script>
+   
+   <body>
+        <div data-role = "page" id = "page0">
+            <div role = "main" class = "ui-content main-container">
+                <img src="ibmlogowhite.png" alt="align box" align="RIGHT" class="logo" />
+                <div class="start-screen">
+                    <div class="start-txt">Welcome to</div>
+                    <div class="start-txt1">Art with Watson</div>
+                </div>
+            </div>
+            <div data-role="footer" role="contentinfo" class="ui-footer ui-bar-inherit footer-container">
+                <footermidtext style="margin-left: 0%;">START NOW</footermidtext>
+                <a href="#page1" data-transition = "fade" data-role='none'><img src="arrowLink.png" alt="align box" align="middle" class="imgLink" /></a>
+            </div>           
+        </div> 
+      <div data-role = "page" id = "page1">
+         <div data-role="header" role="banner" class="ui-header ui-bar-inherit header-container">
+            <headerStartText>[art<b>Smart</b>]</headerStartText>
+            <headerMidText class="headerMidText">Revel in your red-carpet moment</headerMidText>
+            <img src="https://diylogodesigns.com/wp-content/uploads/2016/04/IBM-Logo-black-PNG-Transparent.png" alt="align box" align="RIGHT" class="logo" />
+         </div>
+         <div role = "main" class = "ui-content main-container">
+            <div class="webcam-box-outer no-container">
+              <div class="webcam-box-inner">
+                <video autoplay="true" id="videoStream"></video>
+              </div>
+            </div>
+            <div class="webcam-box-outer left-container">
+              <div class="webcam-box-inner">
+                <img src="karan1.png" title="Karan" class="slide1Img" />
+                <!-- <canvas id="camstream"></canvas> -->
+              </div>
+            </div>
+            <div class="webcam-box-outer right-container">
+              <div class="webcam-box-inner" >
+                  <contenttext id="person" class="intro-txt"><span>Hi, Karan!</span> I am Watson</contenttext>
+                  <contenttext class="intro-txt1">Welcome to <span>Vogue Women Of The Year!</span></contenttext>
+              </div>
+            </div>
+         </div>
+         <div data-role="footer" role="contentinfo" class="ui-footer ui-bar-inherit footer-container">
+                <a href="#page0" data-transition = "fade" data-role='none'><img src="arrowLink.png" alt="align box" align="middle" class="imgLink rotateImg" /></a>
+             <footermidtext>CATCH THE COLOURS IN VOGUE</footermidtext>
+             <a id='takesnap' href="#page2" data-transition = "fade" data-role='none'><img src="arrowLink.png" alt="align box" align="middle" class="imgLink" /></a>
+         </div>         
+      </div>
+      
+      <div data-role = "page" id = "page2">
+         <div data-role="header" role="banner" class="ui-header ui-bar-inherit header-container" >
+            <headerStartText>[art<b>Smart</b>]</headerStartText>
+            <headerMidText class="headerMidText">Catch the colours in vogue</headerMidText>
+            <img src="https://diylogodesigns.com/wp-content/uploads/2016/04/IBM-Logo-black-PNG-Transparent.png" alt="align box" align="RIGHT" class="logo">
+         </div>
+         <div role = "main" class = "ui-content main-container">
+            <div class="webcam-box-outer left-container">
+              <div class="webcam-box-inner">
+                    <div class="year-info">2018</div>
+                    <div class="image-cont"><img id='snapshot_1' src="karan1_old.jpg" title="Karan" /></div>
+                    <div class="percentage-container new-cont-per">
+                            <div class="per-color per-color-1" style="background-color:gray; width:40%;"><span class="color">Gray</span>
+                            <span class="per">40</span><span class="symbol">%</span></div>
+                            <div class="per-color per-color-2" style="background-color:black; width:38%;"><span class="color">Black</span>
+                                <span class="per">38</span><span class="symbol">%</span></div>
+                            <div class="per-color per-color-3" style="background-color:white; width:22%; color: black;"><span class="color">White</span>
+                                <span class="per">22</span><span class="symbol">%</span></div>
+                        </div>
+                  <colorTypeText id='piccolor' class="lastpiccolor new-color-list">This year your dominant colours are <span class="color-1">Red</span> & <span class="color-2">Black</span></colorTypeText>
+              </div>
+            </div>
+            <div class="webcam-box-outer right-container">
+                <div class="webcam-box-inner">
+                    <div class="year-info">2017</div>
+                    <div class="image-cont"><img id='oldsnap_1' src="karan_old.jpg" title="Karan" /></div>
+                    <div class="percentage-container old-cont-per">
+                        <div class="per-color per-color-1"><span class="color">Red</span>
+                        <span class="per">52</span><span class="symbol">%</span></div>
+                        <div class="per-color per-color-2"><span class="color">Black</span>
+                            <span class="per">28</span><span class="symbol">%</span></div>
+                        <div class="per-color per-color-3"><span class="color">Gray</span>
+                            <span class="per">20</span><span class="symbol">%</span></div>
+                    </div>
+                    <colorTypeText id='lastpiccolor' class="lastpiccolor old-color-list" >Last year your dominant colours were <span class="color-1">Red</span> & <span class="color-2">Black</span></colorTypeText>
+                </div>
+            </div>
+         </div>
+         
+         <div data-role="footer" role="contentinfo" class="ui-footer ui-bar-inherit footer-container">
+             <a href="#page1" data-transition = "fade" data-role='none'><img src="arrowLink.png" alt="align box" align="middle" class="imgLink rotateImg" /></a>
+             <footermidtext style="margin-left: 0%;">AMP UP YOUR PICTURE</footermidtext>
+             <a href="#page3" data-transition = "fade" data-role='none'><img src="arrowLink.png" alt="align box" align="middle" class="imgLink" /></a>
+         </div>         
+
+      </div>
+      <div data-role = "page" id = "page2-1">
+            <div data-role="header" role="banner" class="ui-header ui-bar-inherit header-container" >
+               <headerStartText>[art<b>Smart</b>]</headerStartText>
+               <headerMidText class="headerMidText">Catch the colours in vogue</headerMidText>
+               <img src="https://diylogodesigns.com/wp-content/uploads/2016/04/IBM-Logo-black-PNG-Transparent.png" alt="align box" align="RIGHT" class="logo">
+            </div>
+            <div role = "main" class = "ui-content main-container">
+               <div class="webcam-box-outer left-container">
+                   <div class="webcam-box-inner">
+                       <img src="karan3.jpg" title="Karan" class="slide1Img" />
+                   </div>
+               </div>
+               <div class="webcam-box-outer right-container">
+                    <div class="percentage-container new-cont-per">
+                        <div class="per-color per-color-1" style="background-color:gray; width:40%;"><span class="color">Gray</span>
+                        <span class="per">40</span><span class="symbol">%</span></div>
+                        <div class="per-color per-color-2" style="background-color:black; width:30%;"><span class="color">Black</span>
+                            <span class="per">30</span><span class="symbol">%</span></div>
+                        <div class="per-color per-color-3" style="background-color:white; width:30%; color: black;"><span class="color">White</span>
+                            <span class="per">30</span><span class="symbol">%</span></div>
+                    </div>
+                    <colorTypeText id='piccolor' class="lastpiccolor new-color-list">This year your dominant colours are <span class="color-1">Red</span> & <span class="color-2">Black</span></colorTypeText>
+                </div>
+            </div>
+            <div data-role="footer" role="contentinfo" class="ui-footer ui-bar-inherit footer-container">
+                    <a href="#page1" data-transition = "fade" data-role='none'><img src="arrowLink.png" alt="align box" align="middle" class="imgLink rotateImg" /></a>
+                    <footermidtext style="margin-left: 0%;">AMP UP YOUR PICTURE</footermidtext>
+                    <a href="#page3" data-transition = "fade" data-role='none'><img src="arrowLink.png" alt="align box" align="middle" class="imgLink" /></a>
+                </div>           
+         </div> 
+      <div data-role = "page" id = "page3">
+         <div data-role="header" role="banner" class="ui-header ui-bar-inherit header-container" >
+            <headerStartText>[art<b>Smart</b>]</headerStartText>
+            <headerMidText class="headerMidText">Amp up your picture</headerMidText>
+            <img src="https://diylogodesigns.com/wp-content/uploads/2016/04/IBM-Logo-black-PNG-Transparent.png" alt="align box" align="RIGHT" class="logo">
+         </div>
+         <div role = "main" class = "ui-content main-container">
+            <div class="webcam-box-outer left-container">
+              <div class="webcam-box-inner img-cont2">
+                  <img id='styleshot_1' src="karan2.jpg" title="Karan" />
+              </div>
+            </div>
+            <div class="right-container">
+                <div class="top-container">
+                    <div class="left-cont">
+                        <div class="webcam-box-outer top-cont">
+                        <div class="webcam-box-inner img-cont-small">
+                            <a id='wavestyle' style="cursor: crosshair;"><img src='effect_1.jpg' tilte="Effect" /></a>
+                        </div>
+                        </div>
+                        <div class="mid-vel-cont"></div>
+                        <div class="webcam-box-outer bottom-cont" >
+                        <div class="webcam-box-inner img-cont-small" >
+                            <a id='candystyle' style="cursor: crosshair;"><img src='effect_3.jpg' tilte="Effect" /></a>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="mid-cont"></div>
+                    <div class="right-cont">
+                        <div class="webcam-box-outer top-cont">
+                        <div class="webcam-box-inner img-cont-small active">
+                            <a id='screamstyle' style="cursor: crosshair;"><img src='effect_2.jpg' tilte="Effect" /></a>
+                        </div>
+                        </div>
+                        <div class="mid-vel-cont"></div>
+                        <div class="webcam-box-outer bottom-cont">
+                        <div class="webcam-box-inner img-cont-small">
+                            <a id='mosiacstyle' style="cursor: crosshair;"><img src='effect_4.jpg' tilte="Effect" /></a>
+                        </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="bottom-container">PICK YOUR FAVOURITE ART EFFECT</div>
+            </div>           
+         </div>
+         
+         <div data-role="footer" role="contentinfo" class="ui-footer ui-bar-inherit footer-container">
+             <a href="#page2" data-transition = "fade" data-role='none'><img src="arrowLink.png" alt="align box" align="middle" class="imgLink rotateImg" /></a>
+             <footermidtext style="margin-left: 0%;">CHECK OUT YOUR NEW LOOK</footermidtext>
+             <a href="#page4" data-transition = "fade" data-role='none'><img src="arrowLink.png" alt="align box" align="middle" class="imgLink" /></a>
+         </div>         
+
+      </div>
+      
+      <div data-role = "page" id = "page4">
+         <div data-role="header" role="banner" class="ui-header ui-bar-inherit header-container" >
+            <headerStartText>[art<b>Smart</b>]</headerStartText>
+            <headerMidText class="headerMidText">Check out your new look</headerMidText>
+            <img src="https://diylogodesigns.com/wp-content/uploads/2016/04/IBM-Logo-black-PNG-Transparent.png" alt="align box" align="RIGHT" class="logo">
+         </div>
+         <div role = "main" class = "ui-content main-container">
+            <div class="webcam-box-outer left-container">
+                <div class="webcam-box-inner">
+                    <img src="karan1.png" title="Karan" class="slide1Img" />
+                </div>
+            </div>
+            <div class="webcam-box-outer right-container">
+                <div class="webcam-box-inner cont-vel" >
+                    <div class="cont-vel-item">
+                        <contenttext class="intro-txt2">VOILA!</contenttext>
+                        <contenttext class="intro-txt3">Here's Your <br />work of art created by</contenttext>
+                        <contenttext class="intro-txt4">IBM Watson</contenttext>
+                        <div class="print-button">PRINT</div>
+                    </div>
+                    
+                </div>
+            </div>
+         </div>
+         <div data-role="footer" role="contentinfo" class="ui-footer ui-bar-inherit footer-container">
+             <a href="#page3" data-transition = "fade" data-role='none'><img src="arrowLink.png" alt="align box" align="middle" class="imgLink rotateImg" /></a>
+             <footermidtext style="margin-left: 0%;">AMP UP YOUR PICTURE</footermidtext>
+             <a href="#page0" data-transition = "fade" data-role='none'><img src="arrowLink.png" alt="align box" align="middle" class="imgLink" /></a>
+         </div>         
+      </div> 
+      <script type="text/javascript">
+        updatePercentageStyles();
+      </script>     
+   </body>
+</html>
